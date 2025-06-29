@@ -1,65 +1,123 @@
 ```markdown
-# 🚦 RetroRun: 8086 Automatic Railway Gate
+# 🚂 RetroRun – 8086 Automatic Railway Gate Simulation
 
-This project simulates an **Automatic Railway Gate Control System** using **8086 Assembly Language**. Designed as part of a microprocessor academic project, it showcases how real-time automation systems can be implemented using low-level hardware programming.
-
-## 📌 Project Description
-
-**RetroRun** is a physics-inspired 2D gate simulation written in **8086 assembly**, simulating the control logic of a railway crossing gate. The gate opens or closes based on the simulated presence of a train, using a modular and structured assembly code design.
-
-This project helps understand:
-- Real-time control in embedded systems
-- I/O operations in 8086
-- Delay logic and polling
-- Modular code structure in assembly
+**RetroRun** is a real-time simulation of an automatic railway gate system written entirely in **8086 Assembly Language**. It features animated train movement using ASCII art, automatic gate operations, and signal control based on the train’s position — all in a classic DOS environment.
 
 ---
 
-## ⚙️ Tools Used
+## 📌 Project Overview
 
-| Tool      | Purpose                         |
-|-----------|---------------------------------|
-| [EMU8086](http://www.emu8086.com/) | To debug and simulate step-by-step assembly code |
-| [DOSBox](https://www.dosbox.com/) | To run the `.COM` or `.EXE` file faster and simulate real-time behavior |
-| Windows PC | Compatible with 16-bit emulation through DOSBox or EMU8086 |
+This Assembly Language project simulates:
+- A train approaching and passing a railway crossing
+- Automatic opening and closing of gates
+- Signal transitions (Red/Green) for both vehicles and trains
+- Bell sound when the train arrives
+- Interactive quit option via keyboard input
 
 ---
 
-## 🚀 How to Run
+## 📁 File Structure
 
-### ▶️ Using DOSBox
-1. Compile the program in EMU8086 to generate a `.COM` or `.EXE` file.
-2. Mount the directory in DOSBox:
-   ```bash
-    mount d d:\8086
-    d:
-    masm RetroRun.asm
-    link RetroRun.obj
-    RetroRun.exe
+```
+
+retrorun/
+├── retrorun.asm   ; Main assembly source code
+├── README.md      ; Project documentation
+
 ````
 
-3. The program will run at a realistic speed inside DOSBox.
+---
 
-### 🐞 Using EMU8086
+## 🖥️ Features
 
-1. Open the `.asm` file in EMU8086.
-2. Use **Compile and Emulate** to debug and run line-by-line.
-3. Useful for analyzing registers, flags, memory usage, and logic flow.
+- 🚆 Animated ASCII train movement from right to left
+- 🚦 Signal lights for both vehicles and trains (RED/GREEN)
+- 🚧 Gate messages update dynamically (`----CLOSE-----` / `----OPEN-----`)
+- 🔔 Bell sound using ASCII beep (`int 21h`)
+- ⌨️ Press `'q'` to exit the simulation gracefully
 
 ---
 
-## 📷 Screenshots
+## 🛠 Requirements
 
-> ![Screenshot]("C:\Users\Asus\Pictures\Screenshots\Screenshot 2025-06-28 162749.png")
+- DOS Emulator like **EMU8086**, **DOSBox**, or **VirtualBox with DOS**
+- Assembler: **EMU8086 IDE**, **TASM**, or **MASM**
+
+---
+
+## ▶️ How to Run
+
+### Using EMU8086:
+1. Open `retrorun.asm` in EMU8086.
+2. Click **Compile and Run**.
+
+### Using TASM:
+```bash
+tasm retrorun.asm
+tlink retrorun.obj
+retrorun.exe
+````
 
 ---
 
-## 📚 Topics Covered
+## 📊 Output Preview
 
-* Assembly Programming with 8086
-* Hardware-level I/O logic simulation
-* Delay loops and real-time polling
-* Modular software design in low-level languages
-* Debugging and speed optimization via DOSBox
+```
+   oooOOOOOO"
+  o   ____       :::::::: _|--|_
+  Y_,_|[]| --+++ |[][][]| | [] |
+ {|_|_|__|;|___|;|______|;|____|;
+  /oo--OO   o o   oo  oo   o  o
+```
+
+```
+GATE: ----CLOSE-----
+Vehicle Signal: ----RED----
+Train Signal  : ----GREEN----
+```
+
+After train passes:
+
+```
+GATE: ----OPEN-----
+Vehicle Signal: ----GREEN----
+Train Signal  : ----RED----
+```
 
 ---
+
+## 💡 Learning Outcomes
+
+This project helped reinforce key concepts in low-level programming:
+
+* Screen control using **BIOS interrupts** (`int 10h`)
+* I/O handling using **DOS interrupts** (`int 21h`)
+* Memory segmentation using `cs`, `ds`, `ss`
+* Stack setup and hardware-level animation
+* Real-world simulation modeling in Assembly
+
+---
+
+## 🚄 Inspired By
+
+> **Vande Bharat Express** – India’s fastest train (as of 2025), covering \~13.35 km in just 5 minutes.
+> This simulation models a simplified version of such train crossings.
+
+---
+
+## 👨‍💻 Author
+
+**Arun R.**
+M.Sc. Software Systems
+[GitHub Profile](https://github.com/arunrdev)
+
+---
+
+## 📃 License
+
+This project is for educational use and personal learning. No license required for usage or modifications.
+
+```
+
+Let me know if you'd like a `LICENSE` file, `.gif` of the simulation, or GitHub Pages deployment too!
+```
