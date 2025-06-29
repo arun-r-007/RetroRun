@@ -1,0 +1,136 @@
+ORG 100H
+
+.DATA
+teamMsg DB 'Enter number of teams (Min 4, Max 8): $'
+teamNames DB 8 DUP(20 DUP('$'))  ; Storage for 8 teams (Each team has max 10 characters)
+teamCount DB 0  
+inputPrompt DB 'Enter Team Name: $'
+fixtureMsg DB 'Match Fixtures: $'
+oversMsg DB '6 Overs Match$'  
+matchNo DB 1  
+newline DB 0DH, 0AH, '$'  
+vsMsg DB ' Vs $'  
+
+.CODE
+START:
+    MOV AH, 09H  
+    LEA DX, teamMsg
+    INT 21H  
+
+    MOV AH, 01H  
+    INT 21H  
+    SUB AL, 30H  
+    MOV teamCount, AL  
+
+    MOV AH, 0   ; Clear AH
+    MOV AH, teamCount  ; Convert AL to AX (16-bit)
+    CMP AX, 4   ; ? Fix: Compare with 16-bit AX instead of CX
+    JGE INPUT_TEAMS
+    JMP START  
+
+INPUT_TEAMS:
+    MOV CX, 0  
+
+INPUT_LOOP:
+    MOV AH, 09H  
+    LEA DX, newline
+    INT 21H
+    LEA DX, inputPrompt
+    INT 21H  
+
+    MOV DI, CX
+    MOV AX, DI
+    SHL AX, 4   ; 10-byte spacing per team
+    ADD DI, OFFSET teamNames
+
+    MOV SI, 0  
+
+TAKE_NAME:
+    MOV AH, 01H
+    INT 21H
+    CMP AL, 0DH  
+    JE END_NAME
+    MOV [DI], AL  ; ? FIX: Use only DI for memory reference  
+    INC DI        ; ? FIX: Move DI forward instead of using SI
+    CMP DI, OFFSET teamNames + 9  ; Limit to 9 characters
+    JL TAKE_NAME
+
+END_NAME:
+    MOV BYTE PTR [DI], '$'   ; ? Use only DI for memory reference  
+  ; Ensure proper string termination  
+    INC CX
+    MOV AH, 0   ; Clear AH
+    MOV AH, teamCount  ; Convert teamCount to 16-bit AX
+    CMP CX, AX  ; ? Fix: Compare CX with AX
+    JL INPUT_LOOP  
+
+DISPLAY_FIXTURES:
+    MOV AH, 09H  
+    LEA DX, newline
+    INT 21H
+    LEA DX, oversMsg
+    INT 21H
+
+    MOV AH, 09H  
+    LEA DX, newline
+    INT 21H
+    LEA DX, fixtureMsg
+    INT 21H
+
+    MOV CX, 0
+    MOV BX, 1  
+
+FIXTURE_LOOP:
+    MOV SI, CX
+    INC SI
+
+    MOV AH, 0   ; Clear AH
+    MOV AH, teamCount  ; Convert to 16-bit
+    CMP SI, AX  ; ? Fix: Compare SI with AX
+    JGE END_FIXTURES
+
+    MOV DI, CX
+    SHL DI, 4  
+    ADD DI, OFFSET teamNames
+
+    MOV AH, 09H
+    LEA DX, newline
+    INT 21H
+    LEA DX, newline
+    INT 21H
+
+    MOV AH, 02H
+    MOV DL, matchNo  
+    ADD DL, 30H
+    INT 21H
+
+    MOV AH, 09H
+    LEA DX, newline
+    INT 21H
+
+    MOV AH, 09H
+    LEA DX, [DI]  
+    INT 21H
+
+    MOV AH, 09H
+    LEA DX, vsMsg  
+    INT 21H
+
+    MOV DI, SI
+    SHL DI, 4  
+    ADD DI, OFFSET teamNames
+
+    MOV AH, 09H
+    LEA DX, [DI]  
+    INT 21H
+
+    INC matchNo
+    INC BX
+    INC CX
+    JMP FIXTURE_LOOP
+
+END_FIXTURES:
+    MOV AH, 4CH
+    INT 21H
+END START
+START
