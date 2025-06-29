@@ -1,123 +1,104 @@
-```markdown
-# 🚂 RetroRun – 8086 Automatic Railway Gate Simulation
+RetroRun: 8086 Automatic Railway Gate Simulation
+This repository contains the implementation of RetroRun, a text-based simulation of an automatic railway gate control system using 8086 Assembly Language. The project animates a moving train with ASCII art and simulates gate and signal operations based on the train’s position. It is designed to run in a DOS environment using BIOS and DOS interrupts.
 
-**RetroRun** is a real-time simulation of an automatic railway gate system written entirely in **8086 Assembly Language**. It features animated train movement using ASCII art, automatic gate operations, and signal control based on the train’s position — all in a classic DOS environment.
+Features
+Animated ASCII Train Movement: The train moves from right to left across the screen using text-mode graphics.
 
----
+Automatic Gate Control: Gates automatically close as the train approaches and open once it has passed.
 
-## 📌 Project Overview
+Signal Management: Vehicle and train signals (RED/GREEN) change in sync with the train's position.
 
-This Assembly Language project simulates:
-- A train approaching and passing a railway crossing
-- Automatic opening and closing of gates
-- Signal transitions (Red/Green) for both vehicles and trains
-- Bell sound when the train arrives
-- Interactive quit option via keyboard input
+Sound Alert: A bell sound is triggered when the train arrives.
 
----
+User Interaction: Press 'q' to exit the simulation at any time.
 
-## 📁 File Structure
+Components
+8086 Assembly Language: Core logic written using 8086 instructions.
 
-```
+BIOS Interrupts (INT 10h): Used for screen clearing, cursor positioning, and drawing.
 
-retrorun/
-├── retrorun.asm   ; Main assembly source code
-├── README.md      ; Project documentation
+DOS Interrupts (INT 21h): Used for string printing and sound control.
 
-````
+EMU8086 / DOSBox: Emulators for compiling and running the program.
 
----
+ASCII Art: Used for rendering the train in a visually appealing way.
 
-## 🖥️ Features
+Train Simulation Design
+ASCII Art Representation
+markdown
+Copy
+Edit
+  oooOOOOOO"
+ o   ____       :::::::: _|--|_
+ Y_,_|[]| --+++ |[][][]| | [] |
+{|_|_|__|;|___|;|______|;|____|;
+ /oo--OO   o o   oo  oo   o  o
+Gate and Signal Displays
+Vehicle Signal: ----RED---- / ----GREEN----
 
-- 🚆 Animated ASCII train movement from right to left
-- 🚦 Signal lights for both vehicles and trains (RED/GREEN)
-- 🚧 Gate messages update dynamically (`----CLOSE-----` / `----OPEN-----`)
-- 🔔 Bell sound using ASCII beep (`int 21h`)
-- ⌨️ Press `'q'` to exit the simulation gracefully
+Train Signal: ----GREEN---- / ----RED----
 
----
+Gate Messages: ----CLOSE----- / ----OPEN-----
 
-## 🛠 Requirements
+How It Works
+Train Initialization: The train starts at column 80 and moves leftward with each loop iteration.
 
-- DOS Emulator like **EMU8086**, **DOSBox**, or **VirtualBox with DOS**
-- Assembler: **EMU8086 IDE**, **TASM**, or **MASM**
+Gate Closes: When the train begins to move, gates display "CLOSE" and vehicle signals turn RED.
 
----
+Train Animation: Each ASCII line is redrawn at the new position, simulating movement.
 
-## ▶️ How to Run
+Gate Opens: When the train reaches column 47, the gates display "OPEN" and vehicle signals turn GREEN.
 
-### Using EMU8086:
-1. Open `retrorun.asm` in EMU8086.
-2. Click **Compile and Run**.
+Sound Alert: A bell (ASCII 07h) rings upon the train's arrival.
 
-### Using TASM:
-```bash
+Restart or Exit: Press any key to restart the animation, or press 'q' to exit.
+
+Software Requirements
+EMU8086 IDE (recommended) – for easy compilation and visualization.
+
+TASM & DOSBox (alternative) – to build and run manually.
+
+Operating System: Windows (with emulator) or any system that supports DOSBox.
+
+Running the Program
+Option 1: Using EMU8086
+Open retrorun.asm in EMU8086.
+
+Click Compile and Run.
+
+Watch the simulation run in the emulator.
+
+Option 2: Using TASM and DOSBox
+bash
+Copy
+Edit
 tasm retrorun.asm
 tlink retrorun.obj
 retrorun.exe
-````
+Future Enhancements
+Add traffic lights animation with blinking effect.
 
----
+Display timer countdown for gate open/close.
 
-## 📊 Output Preview
+Add multiple trains or tracks.
 
-```
-   oooOOOOOO"
-  o   ____       :::::::: _|--|_
-  Y_,_|[]| --+++ |[][][]| | [] |
- {|_|_|__|;|___|;|______|;|____|;
-  /oo--OO   o o   oo  oo   o  o
-```
+Integrate keyboard controls to change speed or direction.
 
-```
-GATE: ----CLOSE-----
-Vehicle Signal: ----RED----
-Train Signal  : ----GREEN----
-```
+Additional Notes
+The simulation clears and redraws the screen using low-level interrupt calls.
 
-After train passes:
+All segments (data, stack, and code) are properly initialized.
 
-```
-GATE: ----OPEN-----
-Vehicle Signal: ----GREEN----
-Train Signal  : ----RED----
-```
+Ensure you compile and run this only in an emulator (it won’t run in a modern terminal).
 
----
+Make sure to read all comments in retrorun.asm to understand logic and control flow.
 
-## 💡 Learning Outcomes
+📍 Fun Fact:
 
-This project helped reinforce key concepts in low-level programming:
+India's fastest train, the Vande Bharat Express, covers ~13.35 km in just 5 minutes.
+This inspired the idea of simulating automated crossings for high-speed trains.
 
-* Screen control using **BIOS interrupts** (`int 10h`)
-* I/O handling using **DOS interrupts** (`int 21h`)
-* Memory segmentation using `cs`, `ds`, `ss`
-* Stack setup and hardware-level animation
-* Real-world simulation modeling in Assembly
-
----
-
-## 🚄 Inspired By
-
-> **Vande Bharat Express** – India’s fastest train (as of 2025), covering \~13.35 km in just 5 minutes.
-> This simulation models a simplified version of such train crossings.
-
----
-
-## 👨‍💻 Author
-
-**Arun R.**
-M.Sc. Software Systems
-[GitHub Profile](https://github.com/arunrdev)
-
----
-
-## 📃 License
-
-This project is for educational use and personal learning. No license required for usage or modifications.
-
-```
-
-Let me know if you'd like a `LICENSE` file, `.gif` of the simulation, or GitHub Pages deployment too!
-```
+Author
+Arun R.
+M.Sc. Software Systems, Coimbatore Institute of Technology
+GitHub: arunrdev
