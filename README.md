@@ -1,4 +1,3 @@
-```markdown
 # RetroRun: 8086 Automatic Railway Gate Simulation
 
 RetroRun is a physics-inspired 2D platformer simulation project developed using **8086 Assembly Language**, focusing on real-time hardware-level interaction and modular game system logic. It emulates the behavior of an **automatic railway gate system**, showcasing the synergy between embedded systems and microprocessor programming.
@@ -35,7 +34,6 @@ To simulate an automatic railway gate system using the 8086 microprocessor, enab
 
 ## 🧩 Project Structure
 
-```
 
 RetroRun/
 ├── gate\_simulation.asm         # Main program file for gate logic
@@ -44,7 +42,6 @@ RetroRun/
 ├── README.md                   # Documentation file (this one)
 └── RetroRun\_Diagram.png        # Visual diagram (optional)
 
-```
 
 ## 🚀 How to Run
 
@@ -63,14 +60,13 @@ RetroRun/
 
 ## 🔍 Example Output
 
-```
+
 
 Train Incoming... 🚂
 Closing Gate...  🚧
 Train Passing...
 Opening Gate...  ✅
 
-```
 
 ## 🎓 What I Learned
 
@@ -88,7 +84,6 @@ Opening Gate...  ✅
 
 This project is for educational purposes only. Feel free to use, modify, or enhance it.
 
----
+
 
 > “RetroRun is not just a simulation, but a nostalgic step into how microprocessors controlled the world, one gate at a time.”
-```
