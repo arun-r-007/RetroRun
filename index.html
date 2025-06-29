@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>RetroRun 8086 RailwayGate</title>
+  
+  <style>
+
+    #mobile-warning {
+        display: none;
+        position: fixed;
+        z-index: 9999;
+        top: -15;
+        left: 0;
+        height: 100vh;
+        width: 100vw;
+        background-color: #0f172a;
+        color: #f8fafc;
+        font-family: 'Courier New', monospace;
+        font-size: 1.4rem;
+        text-align: center;
+        padding: 2rem;
+        box-sizing: border-box;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+
+
+
+    body {
+        background-color: #0f172a;
+        color: #f8fafc;
+        font-family: 'Courier New', monospace;
+    }
+    .container {
+        position: absolute;
+        top: 23%;
+        left: 25%;
+        
+        width: 900px;
+        margin: auto;
+        justify-content: center;
+    }
+    .title {
+        font-size: 3.5rem;
+        margin-bottom: 1rem;
+        color: #38bdf8;
+        position: absolute;
+        top: 7%;
+        left: 26.5%;
+    }
+    .track {
+        background-color: #1e293b;
+        border: 2px solid #334155;
+        padding: 20px;
+        border-radius: 10px;
+        overflow-x: hidden;
+        height: 125px;
+    }
+    .ascii-art {
+        white-space: pre;
+        font-size: 16px;
+        line-height: 1.3;
+        color: #facc15;
+    }
+    .signals {
+        display: flex;
+        justify-content: space-between;
+        margin: 20px 0;
+        align-items: center;
+    }
+    .signal-box {
+        text-align: center;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #1e293b;
+        border: 1px solid #64748b;
+    }
+    .green { color: #22c55e; }
+    .red { color: #ef4444; }
+    .yellow { color: #facc15; }
+    .btn {
+        display: block;
+        margin: 30px auto 0;
+        padding: 12px 24px;
+        font-size: 16px;
+        border: none;
+        background-color: #3b82f6;
+        color: white;
+        border-radius: 6px;
+        cursor: pointer;
+        transition: 0.3s ease;
+    }
+    .btn:hover {
+        background-color: #2563eb;
+    }
+
+
+    .red_png{
+        position: absolute;
+        top: 21.5%;
+        left: 27%;
+    }
+
+    .green_png{
+        position: absolute;
+        top:21.5%;
+        right:9%;
+    }
+
+    #signal-box1{
+        height: 10%;
+        position: relative;
+        left: -10%;
+    }
+
+    #signal-box2{
+        height: 10%;
+        position: relative;
+        left: 10%;
+    }
+    .gate_a{
+        text-align: center;
+        padding: 10px;
+        border-radius: 10px;
+        background-color: #1e293b;
+        border: 1px solid #64748b;
+        width: 20%;
+        position: relative;
+        left: -23%;
+
+    }
+
+
+    /* Small laptops and tablets in landscape (768px to 1024px) */
+    @media only screen and (min-width: 768px) and (max-width: 1400px) {
+        .container {
+        position: absolute;
+        top:12%;
+        left: 18%;
+        }
+
+        .title{
+        font-size: 2.5rem;
+        position: absolute;
+        top:1%;
+        left: 29%;
+        }
+
+    }
+
+  </style>
+  
+</head>
+<body>
+
+<div id="mobile-warning">
+  🚫 This website is best viewed on desktops or laptops.<br>
+  Please use a larger screen for simulate this RetroRun
+</div>
+
+<h1 class="title">RetroRun 8086 RailwayGate</h1>
+
+  <div class="container">
+    
+    <div class="signals">
+     <img src="red.png" height="20%" width="20%" id="vehicle_signal" alt="red_signal">
+      <div class="signal-box" id="signal-box1">
+        <strong>-Vehicle Signal-</strong><br>
+        <span id="vehicle-signal" class="red">----RED----</span>
+      </div>
+      <div class="signal-box" id="signal-box2">
+        <strong>-Train Signal-</strong><br>
+        <span id="train-signal" class="green">----GREEN----</span>
+      </div>
+      <img src="green.png" height="20%" width="20%" id="train_signal" alt="green_signal">
+    </div>
+
+    <div class="track">
+      <div class="ascii-art" id="train-display">
+        <!-- Train lines will appear here -->
+      </div>
+    </div><br><br>
+
+    <center>
+        <div class="gate_a" >
+            <strong>Vehicle Gate's</strong><br>
+            <span id="gate-a">----CLOSED-----</span>
+        </div>
+    
+
+    <br><button class="btn" onclick="startSimulation()" id="hide" >Run the Retro</button><br><br>
+
+    <h3 id="show">Press 'a' ( or ) 'A' ( or ) Left Arrow key to Move ( <- )</h3>
+    </center>
+  </div>
+
+<script>
+    const trainArt = [
+    '  oooOOOOOO"',
+    ' o   ____       :::::::: _|--|_',
+    ' Y_,_|[]| --+++ |[][][]| | [] |',
+    '{|_|_|__|;|___|;|______|;|____|;',
+    ' /oo--OO   o o   oo  oo   o  o'
+    ];
+
+    function delay(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+    }
+
+    function waitForKey(keys) {
+    return new Promise(resolve => {
+        function onKey(event) {
+        if (keys.includes(event.key)) {
+            document.removeEventListener('keydown', onKey);
+            resolve(event.key);
+        }
+        }
+        document.addEventListener('keydown', onKey);
+    });
+    }
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+    const width = window.innerWidth;
+    console.log("Window width: " + width); // Debug
+
+    if (width <= 1050) {
+        document.getElementById("mobile-warning").style.display = "flex";
+        document.querySelector(".container").style.display = "none";
+        document.querySelector(".title").style.display = "none";
+        document.body.style.overflow = "hidden";
+        return; // VERY IMPORTANT
+    }
+
+    // Hide the button on click
+    document.getElementById("hide").addEventListener("click", function () {
+        document.querySelectorAll(".btn").forEach(btn => btn.style.display = "none");
+    });
+
+    // Hide the <h3 id="show"> initially
+    document.getElementById("show").style.display = "none";
+    
+    });
+
+    // Function to show the <h3 id="show">
+    function showMessage() {
+    const showElement = document.getElementById("show");
+    if (showElement) {
+        showElement.style.display = "block";
+    }
+    }
+
+    function hideMessage() {
+    const message = document.getElementById("show");
+    if (message) {
+        message.style.display = "none";
+    }
+    }
+
+    async function startSimulation() {
+    const trainDisplay = document.getElementById("train-display");
+    const gateA = document.getElementById("gate-a");
+    const vehicleSignal = document.getElementById("vehicle-signal");
+    const trainSignal = document.getElementById("train-signal");
+    const vehicle_signal = document.getElementById("vehicle_signal");
+    const train_signal = document.getElementById("train_signal");
+
+
+    let start = 88;
+    let checkpoint = 47;
+    let end = -32;
+
+    while (true) {
+
+        setGatesOpen(gateA, vehicleSignal, trainSignal);
+        await moveTrain(trainDisplay, start, checkpoint);
+
+        showMessage();
+
+        const pressedKey = await waitForKey(['a', 'A', 'ArrowLeft']);
+        if (['a', 'A', 'ArrowLeft'].includes(pressedKey)) {
+        setGatesClosed(gateA, vehicleSignal, trainSignal);
+        }
+
+        hideMessage();
+
+        await moveTrain(trainDisplay, checkpoint - 1, end);
+
+        start = 88;
+        checkpoint = 47;
+    }
+    }
+
+    function setGatesOpen(gateA, vehicleSignal, trainSignal) {
+    gateA.textContent = "----OPEND-----";
+    vehicleSignal.textContent = "----GREEN----";
+    vehicleSignal.className = "green";
+    trainSignal.textContent = "----RED----";
+    trainSignal.className = "red";
+
+    vehicle_signal.src = "green.png";
+    vehicle_signal.alt = "green_signal";
+    train_signal.src = "red.png";
+    train_signal.alt = "red_signal";
+
+    
+    
+    }
+
+    function setGatesClosed(gateA, vehicleSignal, trainSignal) {
+    gateA.textContent = "----CLOSED-----";
+    vehicleSignal.textContent = "----RED----";
+    vehicleSignal.className = "red";
+    trainSignal.textContent = "----GREEN----";
+    trainSignal.className = "green";
+    
+    vehicle_signal.src = "red.png";
+    vehicle_signal.alt = "red_signal";
+    train_signal.src = "green.png";
+    train_signal.alt = "green_signal";
+    
+    }
+
+    async function moveTrain(trainDisplay, from, to) {
+    const step = from > to ? -1 : 1;
+    for (let col = from; col !== to + step; col += step) {
+        const train = trainArt.map(line => {
+        return col < 0 ? line.substring(-col) : ' '.repeat(col) + line;
+        }).join('\n');
+        trainDisplay.innerHTML = train;
+        await delay(50); // faster animation
+    }
+    }
+</script>
+</body>
+</html>
