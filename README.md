@@ -87,3 +87,5 @@ This project is for educational purposes only. Feel free to use, modify, or enha
 
 
 > “RetroRun is not just a simulation, but a nostalgic step into how microprocessors controlled the world, one gate at a time.”
+>
+> https://arun-r-007.github.io/RetroRun-8086-RailwayGate/
