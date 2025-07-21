@@ -14,6 +14,18 @@ To simulate an automatic railway gate system using the 8086 microprocessor, enab
 
 ---
 
+> “RetroRun is not just a simulation, but a nostalgic step into how microprocessors controlled the world, one gate at a time.”
+
+[Project Demo Website](https://arun-r-007.github.io/RetroRun-8086-RailwayGate/)
+
+---
+
+## Demo Screenshot
+
+![Demo Image](https://github.com/user-attachments/assets/d195dcde-4a43-48d4-856a-0754400ee482)
+
+---
+
 ## Technologies Used
 
 * 8086 Assembly Language
@@ -93,13 +105,3 @@ Opening Gate...
 * Software-based timing techniques
 * Real-world simulation of embedded systems
 * Best practices in writing modular and reusable assembly code
-
----
-
-> “RetroRun is not just a simulation, but a nostalgic step into how microprocessors controlled the world, one gate at a time.”
-
-[Project Page](https://arun-r-007.github.io/RetroRun-8086-RailwayGate/)
-
-
-
-
