@@ -1,4 +1,4 @@
-# RetroRun: 8086 Automatic Railway Gate Simulation
+# RetroRun - 8086 Automatic Railway Gate Simulation
 
 **RetroRun** is a physics-inspired 2D platformer simulation project developed using **8086 Assembly Language**, focusing on real-time hardware-level interaction and modular game system logic. It emulates the behavior of an **automatic railway gate system**, demonstrating the synergy between embedded systems and microprocessor programming.
 
