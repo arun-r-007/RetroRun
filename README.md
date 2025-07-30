@@ -12,7 +12,7 @@ To simulate an automatic railway gate system using the 8086 microprocessor, enab
 
 > “RetroRun is not just a simulation, but a nostalgic step into how microprocessors controlled the world, one gate at a time.”
 
-[Project Demo Website](https://arun-r-007.github.io/RetroRun-8086-RailwayGate/)
+[Project Demo Website](https://arun-r-007.github.io/RetroRun/)
 
 ---
 
